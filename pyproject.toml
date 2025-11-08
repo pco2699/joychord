@@ -38,7 +38,7 @@ Repository = "https://github.com/pco2699/joychord"
 Issues = "https://github.com/pco2699/joychord/issues"
 
 [project.scripts]
-joychord = "joychord:main"
+joychord = "joychord.cli:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -52,7 +52,7 @@ dev-dependencies = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["."]
+packages = ["joychord"]
 
 [tool.mypy]
 python_version = "3.11"
@@ -91,11 +91,12 @@ addopts = [
 ]
 
 [tool.coverage.run]
-source = ["."]
+source = ["joychord"]
 omit = [
     "tests/*",
     ".venv/*",
     "setup.py",
+    "joychord_legacy.py",
 ]
 
 [tool.coverage.report]
