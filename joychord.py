@@ -9,7 +9,7 @@ import pygame
 import mido
 import time
 import sys
-import argparse
+import click
 import math
 from enum import Enum
 from typing import List, Dict, Tuple, Optional
@@ -930,59 +930,58 @@ def test_controller_buttons():
 # COMMAND LINE INTERFACE
 # ============================================================================
 
-def main():
-    """Main entry point"""
-    parser = argparse.ArgumentParser(
-        description="JoyChord - Musical Chord Controller System",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  %(prog)s                          # Start with defaults
-  %(prog)s --key D --octave 1       # Start in D major, octave +1
-  %(prog)s --bpm 140                # Set BPM to 140
-  %(prog)s --test-buttons           # Test controller button mapping
-  %(prog)s --list-midi              # List available MIDI ports
-        """
-    )
+@click.command()
+@click.option('--key', type=click.Choice(KEYS, case_sensitive=False), default='C',
+              help='Starting key (default: C)')
+@click.option('--octave', type=click.IntRange(MIN_OCTAVE, MAX_OCTAVE), default=0,
+              help=f'Starting octave offset from {MIN_OCTAVE} to {MAX_OCTAVE} (default: 0)')
+@click.option('--bpm', type=click.IntRange(MIN_BPM, MAX_BPM), default=DEFAULT_BPM,
+              help=f'Starting BPM from {MIN_BPM} to {MAX_BPM} (default: {DEFAULT_BPM})')
+@click.option('--mode', type=click.Choice(['play', 'arp', 'repeat', 'drum', 'autodrum'], case_sensitive=False),
+              default='play', help='Starting playback mode (default: play)')
+@click.option('--midi-port', type=str, default=None,
+              help='MIDI output port name')
+@click.option('--list-midi', is_flag=True,
+              help='List available MIDI ports and exit')
+@click.option('--test-buttons', is_flag=True,
+              help='Test controller button mapping')
+@click.option('--debug', is_flag=True,
+              help='Enable debug output')
+@click.version_option(version=VERSION, prog_name='joychord')
+def main(key, octave, bpm, mode, midi_port, list_midi, test_buttons, debug):
+    """JoyChord - Musical Chord Controller System
 
-    # Basic options
-    parser.add_argument('--key', default='C', choices=KEYS,
-                        help='Starting key (default: C)')
-    parser.add_argument('--octave', type=int, default=0,
-                        choices=range(MIN_OCTAVE, MAX_OCTAVE + 1),
-                        help='Starting octave offset (default: 0)')
-    parser.add_argument('--bpm', type=int, default=DEFAULT_BPM,
-                        help=f'Starting BPM (default: {DEFAULT_BPM})')
-    parser.add_argument('--mode', default='play',
-                        choices=['play', 'arp', 'repeat', 'drum', 'autodrum'],
-                        help='Starting playback mode (default: play)')
+    Convert your Bluetooth game controller into a powerful MIDI chord controller.
 
-    # MIDI options
-    parser.add_argument('--midi-port', type=str, default=None,
-                        help='MIDI output port name')
-    parser.add_argument('--list-midi', action='store_true',
-                        help='List available MIDI ports and exit')
+    Examples:
 
-    # Testing options
-    parser.add_argument('--test-buttons', action='store_true',
-                        help='Test controller button mapping')
-    parser.add_argument('--debug', action='store_true',
-                        help='Enable debug output')
-
-    # Version
-    parser.add_argument('--version', action='version',
-                        version=f'%(prog)s {VERSION}')
-
-    args = parser.parse_args()
-
+      \b
+      joychord                          # Start with defaults
+      joychord --key D --octave 1       # Start in D major, octave +1
+      joychord --bpm 140                # Set BPM to 140
+      joychord --test-buttons           # Test controller button mapping
+      joychord --list-midi              # List available MIDI ports
+    """
     # Handle special modes
-    if args.list_midi:
+    if list_midi:
         MIDISystem.list_ports()
         return
 
-    if args.test_buttons:
+    if test_buttons:
         test_controller_buttons()
         return
+
+    # Create a simple args object for compatibility
+    class Args:
+        pass
+
+    args = Args()
+    args.key = key
+    args.octave = octave
+    args.bpm = bpm
+    args.mode = mode
+    args.midi_port = midi_port
+    args.debug = debug
 
     # Run main application
     app = JoyChord(args)
