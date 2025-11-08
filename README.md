@@ -33,22 +33,31 @@ Convert your Bluetooth game controller into a powerful MIDI chord controller for
 
 ### Installation
 
+**Using uv (Recommended - Fast & Modern):**
+
+```bash
+# Install uv if you haven't already
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install JoyChord and dependencies
+uv sync
+
+# Run JoyChord
+uv run joychord.py
+
+# Or use the command directly
+uv run joychord
+```
+
+**Using pip (Traditional):**
+
 ```bash
 # Install dependencies
 pip install -r requirements.txt
 
-# Or install manually
-pip install pygame mido python-rtmidi
-```
-
-### Run JoyChord
-
-```bash
-# Linux/macOS
-python3 joychord.py
-
-# Windows
-python joychord.py
+# Run JoyChord
+python3 joychord.py  # Linux/macOS
+python joychord.py   # Windows
 ```
 
 ## Controller Layout
@@ -100,16 +109,19 @@ Hold one button, then press another:
 
 ```bash
 # Test button layout
-python3 joychord.py --test-buttons
+uv run joychord --test-buttons
 
 # Start in D major
-python3 joychord.py --key D
+uv run joychord --key D
 
 # Set BPM
-python3 joychord.py --bpm 140
+uv run joychord --bpm 140
 
 # Debug mode
-python3 joychord.py --debug
+uv run joychord --debug
+
+# Or with python directly
+python3 joychord.py --test-buttons
 ```
 
 ## Platform-Specific Setup
@@ -124,15 +136,27 @@ python3 joychord.py --debug
 ### Linux (Ubuntu/Debian)
 
 ```bash
-sudo apt-get install python3-pip python3-pygame libasound2-dev
-pip3 install -r requirements.txt
+# Install system dependencies
+sudo apt-get install python3-pygame libasound2-dev
+
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Install JoyChord
+uv sync
 ```
 
 ### macOS
 
 ```bash
-brew install python
-pip3 install -r requirements.txt
+# Install uv
+curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# Or via Homebrew
+brew install uv
+
+# Install JoyChord
+uv sync
 ```
 
 ## Controls Reference

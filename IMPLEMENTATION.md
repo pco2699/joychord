@@ -54,24 +54,31 @@ Tested button mapping works with:
 - Generic USB/Bluetooth controllers
 
 ### 📋 Command-Line Options
+
+**Using uv:**
 ```bash
 # Basic usage
-python3 joychord.py
+uv run joychord
 
 # Test button mapping
-python3 joychord.py --test-buttons
+uv run joychord --test-buttons
 
 # Start in specific key/octave
-python3 joychord.py --key D --octave 1
+uv run joychord --key D --octave 1
 
 # Set BPM
-python3 joychord.py --bpm 140
+uv run joychord --bpm 140
 
 # List MIDI ports
-python3 joychord.py --list-midi
+uv run joychord --list-midi
 
 # Debug mode
-python3 joychord.py --debug
+uv run joychord --debug
+```
+
+**Or with Python directly:**
+```bash
+python3 joychord.py --test-buttons
 ```
 
 ### 📊 Code Statistics
@@ -187,11 +194,20 @@ These modes are structurally supported but not yet fully implemented:
 - ✅ MIDI note on/off
 
 ### 📦 Dependencies
+
+**Using uv (Recommended):**
+```bash
+uv sync  # Installs all dependencies from pyproject.toml
+```
+
+**Dependencies:**
 ```
 pygame>=2.0.0       # Controller input
 mido>=1.2.0         # MIDI messages
 python-rtmidi>=1.4.0 # MIDI backend
 ```
+
+All dependencies are managed in `pyproject.toml` for modern Python package management.
 
 ### 🐛 Known Limitations
 1. Only PLAY mode is fully functional (other modes cycle but don't change behavior)
@@ -242,7 +258,7 @@ python-rtmidi>=1.4.0 # MIDI backend
 
 ### 📝 Usage Example Session
 ```
-$ python3 joychord.py --key C
+$ uv run joychord --key C
 
 🎹 JoyChord v0.1 - Musical Chord Controller
 ============================================================
