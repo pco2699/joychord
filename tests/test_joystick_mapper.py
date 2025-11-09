@@ -2,7 +2,8 @@
 
 import pytest
 import math
-from joychord import JoystickQualityMapper, ChordQuality
+from joychord.joystick_mapper import JoystickQualityMapper
+from joychord.enums import ChordQuality
 
 
 class TestJoystickQualityMapper:

@@ -1,14 +1,13 @@
 """Unit tests for JoyChord constants and configuration"""
 
 import pytest
-from joychord import (
+from joychord.constants import (
     KEYS,
     MIN_OCTAVE,
     MAX_OCTAVE,
     MIN_BPM,
     MAX_BPM,
     DEFAULT_BPM,
-    CHORD_BUTTONS,
     BTN_TONIC,
     BTN_SUPERTONIC,
     BTN_MEDIANT,
@@ -16,10 +15,10 @@ from joychord import (
     BTN_DOMINANT,
     BTN_SUBMEDIANT,
     BTN_LEADING,
-    ChordQuality,
     DEGREE_NAMES,
-    PlayMode,
 )
+from joychord.chord_config import CHORD_BUTTONS
+from joychord.enums import ChordQuality, PlayMode
 
 
 class TestConstants:

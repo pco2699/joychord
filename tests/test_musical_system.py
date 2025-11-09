@@ -1,14 +1,9 @@
 """Unit tests for JoyChord Musical System"""
 
 import pytest
-from joychord import (
-    MusicalSystem,
-    ChordQuality,
-    KEYS,
-    MIN_OCTAVE,
-    MAX_OCTAVE,
-    CHORD_INTERVALS,
-)
+from joychord.musical_system import MusicalSystem
+from joychord.enums import ChordQuality
+from joychord.constants import KEYS, MIN_OCTAVE, MAX_OCTAVE, CHORD_INTERVALS
 
 
 class TestMusicalSystem:

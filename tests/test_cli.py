@@ -2,7 +2,8 @@
 
 import pytest
 from click.testing import CliRunner
-from joychord import main, VERSION
+from joychord.cli import main
+from joychord.constants import VERSION
 
 
 class TestCLI:
