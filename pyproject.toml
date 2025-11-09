@@ -1,0 +1,111 @@
+[project]
+name = "joychord"
+version = "0.1.0"
+description = "Musical Chord Controller - Convert Bluetooth game controllers into MIDI chord controllers"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "JoyChord Contributors"}
+]
+keywords = ["midi", "music", "controller", "gamepad", "chords", "nashville-number-system"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: MIDI",
+    "Topic :: Games/Entertainment",
+]
+
+dependencies = [
+    "pygame>=2.0.0",
+    "mido>=1.2.0",
+    "python-rtmidi>=1.4.0",
+    "click>=8.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/pco2699/joychord"
+Repository = "https://github.com/pco2699/joychord"
+Issues = "https://github.com/pco2699/joychord/issues"
+
+[project.scripts]
+joychord = "joychord.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+dev-dependencies = [
+    "mypy>=1.0.0",
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["joychord"]
+
+[tool.mypy]
+python_version = "3.11"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
+check_untyped_defs = true
+disallow_untyped_calls = false
+warn_redundant_casts = true
+warn_unused_ignores = true
+warn_no_return = true
+warn_unreachable = true
+strict_optional = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = "mido.*"
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = "pygame.*"
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--cov=.",
+    "--cov-report=term-missing",
+    "--cov-report=html",
+    "--cov-report=xml",
+    "-v"
+]
+
+[tool.coverage.run]
+source = ["joychord"]
+omit = [
+    "tests/*",
+    ".venv/*",
+    "setup.py",
+    "joychord_legacy.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "@abstractmethod",
+]
